@@ -1,8 +1,8 @@
 package com.example.tictactoe.game;
 
 import static com.example.tictactoe.game.BoardStatus.ACTIVE;
-import static com.example.tictactoe.game.Turn.O;
-import static com.example.tictactoe.game.Turn.X;
+import static com.example.tictactoe.game.Player.O;
+import static com.example.tictactoe.game.Player.X;
 
 /**
  * @author Pubudu
@@ -13,7 +13,7 @@ public class GameBoard {
   private final String sessionId;
   private String[] board = new String[9];
   private BoardStatus boardStatus = ACTIVE;
-  private Turn turn = X;
+  private Player currentPlayer = X;
 
   public GameBoard(String sessionId) {
     this.sessionId = sessionId;
@@ -22,38 +22,38 @@ public class GameBoard {
   /**
    * Update and get board status
    *
-   * @param turn  Player turn
-   * @param index Index to insert
+   * @param player Player turn
+   * @param index  Index to insert
    * @return Board status
    */
-  public BoardUpdateStatus updateBoard(Turn turn, int index) {
-    if (isValidTurn(turn)) {
-      board[index] = turn.name();
+  public BoardUpdateStatus updateBoard(Player player, int index) {
+    if (isValidTurn(player)) {
+      board[index] = player.name();
       updateTurn();
-      return new BoardUpdateStatus(true, this.boardStatus, this.turn, this.board);
+      return new BoardUpdateStatus(true, boardStatus, currentPlayer, board);
     } else {
-      return new BoardUpdateStatus(false, this.boardStatus, this.turn, this.board);
+      return new BoardUpdateStatus(false, boardStatus, currentPlayer, board);
     }
   }
 
   /**
    * Validate current turn
    *
-   * @param turn Player taking the turn
+   * @param player Player taking the turn
    * @return Returns true if player taking the turn is equal to expected current turn, else false
    */
-  private boolean isValidTurn(Turn turn) {
-    return this.turn.equals(turn);
+  private boolean isValidTurn(Player player) {
+    return this.currentPlayer.equals(player);
   }
 
   /**
    * Updates/Switches turn. X->O or O->X depending on the current turn value
    */
   private void updateTurn() {
-    if (turn.equals(X)) {
-      this.turn = O;
+    if (currentPlayer.equals(X)) {
+      this.currentPlayer = O;
     } else {
-      this.turn = X;
+      this.currentPlayer = X;
     }
   }
 }

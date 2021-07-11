@@ -1,5 +1,5 @@
 package com.example.tictactoe.game;
 
-public enum Turn {
+public enum Player {
   X,O
 }

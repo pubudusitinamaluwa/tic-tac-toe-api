@@ -8,6 +8,6 @@ import lombok.Getter;
 public class BoardUpdateStatus {
   private final boolean success;
   private final BoardStatus boardStatus;
-  private final Turn nextTurn;
+  private final Player nextPlayer;
   private final String[] board;
 }
