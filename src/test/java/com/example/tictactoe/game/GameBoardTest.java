@@ -24,10 +24,10 @@ class GameBoardTest {
 
   @Test
   void valid_turn_updates_board() {
-    BoardUpdateStatus updateStatus = gameBoard.updateBoard(Turn.O, 1);
+    BoardUpdateStatus updateStatus = gameBoard.updateBoard(Turn.X, 1);
     assert updateStatus.getNextTurn().equals(Turn.O);
     assert updateStatus.getBoardStatus() == BoardStatus.ACTIVE;
-    assert updateStatus.getBoard()[1].equals("O");
+    assert updateStatus.getBoard()[1].equals("X");
     assert updateStatus.isSuccess();
   }
 
