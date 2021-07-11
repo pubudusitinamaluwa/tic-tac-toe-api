@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class BoardUpdateStatus {
+public class BoardState {
   private final boolean success;
-  private final BoardStatus boardStatus;
+  private final GameStatus gameStatus;
   private final Player nextPlayer;
   private final String[] board;
   private final Player winner;

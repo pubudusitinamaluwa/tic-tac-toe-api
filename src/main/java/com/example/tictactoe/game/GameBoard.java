@@ -3,9 +3,9 @@ package com.example.tictactoe.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.tictactoe.game.BoardStatus.ACTIVE;
-import static com.example.tictactoe.game.BoardStatus.DRAW;
-import static com.example.tictactoe.game.BoardStatus.WIN;
+import static com.example.tictactoe.game.GameStatus.ACTIVE;
+import static com.example.tictactoe.game.GameStatus.DRAW;
+import static com.example.tictactoe.game.GameStatus.WIN;
 import static com.example.tictactoe.game.Player.NONE;
 import static com.example.tictactoe.game.Player.O;
 import static com.example.tictactoe.game.Player.X;
@@ -18,7 +18,7 @@ import static com.example.tictactoe.game.Player.X;
 public class GameBoard {
   private final String sessionId;
   private String[] board = new String[9];
-  private BoardStatus boardStatus = ACTIVE;
+  private GameStatus gameStatus = ACTIVE;
   private Player allowedStriker = X;
   private Player winner = NONE;
 
@@ -31,16 +31,16 @@ public class GameBoard {
    *
    * @param player Player taking the turn to strike
    * @param index  Index to insert
-   * @return Board status
+   * @return Board state
    */
-  public BoardUpdateStatus updateBoard(Player player, int index) {
-    if (isValidStriker(player) && boardStatus.equals(ACTIVE)) {
+  public BoardState updateBoard(Player player, int index) {
+    if (isValidStriker(player) && gameStatus.equals(ACTIVE)) {
       board[index] = player.name();
       evaluateBoard(player);
       updateStriker();
-      return new BoardUpdateStatus(true, boardStatus, allowedStriker, board, winner);
+      return new BoardState(true, gameStatus, allowedStriker, board, winner);
     } else {
-      return new BoardUpdateStatus(false, boardStatus, allowedStriker, board, winner);
+      return new BoardState(false, gameStatus, allowedStriker, board, winner);
     }
   }
 
@@ -79,7 +79,7 @@ public class GameBoard {
     for (String line : lines) {
       System.out.println(line);
       if (line.matches(striker.name() + "{3}")) {
-        boardStatus = WIN;
+        gameStatus = WIN;
         winner = striker;
         allowedStriker = NONE;
         return;
@@ -88,7 +88,7 @@ public class GameBoard {
       }
     }
     if (isDraw) {
-      boardStatus = DRAW;
+      gameStatus = DRAW;
       allowedStriker = NONE;
     }
   }
