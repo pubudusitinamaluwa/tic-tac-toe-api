@@ -33,4 +33,112 @@ class GameBoardTest {
     assert updateStatus.getWinner().equals(Player.NONE);
   }
 
+  @Test
+  void board_evaluates_win_X() {
+    /* |---|---|---|  |---|---|---|
+       | 0 | 1 | 2 |  | X |   | O |
+       |-----------|  |-----------|
+       | 3 | 4 | 5 |  | X | O |   |
+       |-----------|  |-----------|
+       | 6 | 7 | 8 |  | X | O | X |
+       |---|---|---|  |---|---|---|*/
+    gameBoard.updateBoard(Player.X, 0);
+    gameBoard.updateBoard(Player.O, 4);
+    gameBoard.updateBoard(Player.X, 8);
+    gameBoard.updateBoard(Player.O, 2);
+    gameBoard.updateBoard(Player.X, 6);
+    gameBoard.updateBoard(Player.O, 7);
+    BoardUpdateStatus updateStatus = gameBoard.updateBoard(Player.X, 3);
+
+    assert updateStatus.isSuccess();
+    assert updateStatus.getNextPlayer().equals(Player.NONE);
+    assert updateStatus.getBoardStatus().equals(BoardStatus.WIN);
+    assert updateStatus.getWinner().equals(Player.X);
+  }
+
+  @Test
+  void board_update_fails_after_win() {
+    /* |---|---|---|  |---|---|---|
+       | 0 | 1 | 2 |  | X |   | O |
+       |-----------|  |-----------|
+       | 3 | 4 | 5 |  | X | O |   |
+       |-----------|  |-----------|
+       | 6 | 7 | 8 |  | X | O | X |
+       |---|---|---|  |---|---|---|*/
+    gameBoard.updateBoard(Player.X, 0);
+    gameBoard.updateBoard(Player.O, 4);
+    gameBoard.updateBoard(Player.X, 8);
+    gameBoard.updateBoard(Player.O, 2);
+    gameBoard.updateBoard(Player.X, 6);
+    gameBoard.updateBoard(Player.O, 7);
+    gameBoard.updateBoard(Player.X, 3);
+
+    BoardUpdateStatus updateStatus = gameBoard.updateBoard(Player.O, 1);
+    assert !updateStatus.isSuccess();
+    assert updateStatus.getNextPlayer().equals(Player.NONE);
+    assert updateStatus.getBoardStatus().equals(BoardStatus.WIN);
+    assert updateStatus.getWinner().equals(Player.X);
+    String[] board = updateStatus.getBoard();
+    assert board[1] == null;
+    assert board[5] == null;
+  }
+
+  @Test
+  void board_evaluates_draw() {
+    /* |---|---|---|  |---|---|---|
+       | 0 | 1 | 2 |  | X | X | O |
+       |-----------|  |-----------|
+       | 3 | 4 | 5 |  | O | O | X |
+       |-----------|  |-----------|
+       | 6 | 7 | 8 |  | X | O | X |
+       |---|---|---|  |---|---|---|*/
+    gameBoard.updateBoard(Player.X, 0);
+    gameBoard.updateBoard(Player.O, 4);
+    gameBoard.updateBoard(Player.X, 1);
+    gameBoard.updateBoard(Player.O, 2);
+    gameBoard.updateBoard(Player.X, 6);
+    gameBoard.updateBoard(Player.O, 3);
+    gameBoard.updateBoard(Player.X, 5);
+    gameBoard.updateBoard(Player.O, 7);
+    BoardUpdateStatus updateStatus = gameBoard.updateBoard(Player.X, 8);
+
+    assert updateStatus.isSuccess();
+    assert updateStatus.getNextPlayer().equals(Player.NONE);
+    assert updateStatus.getBoardStatus().equals(BoardStatus.DRAW);
+    assert updateStatus.getWinner().equals(Player.NONE);
+    for (String x : updateStatus.getBoard()) {
+      assert x != null;
+    }
+  }
+
+  @Test
+  void board_update_fails_after_draw() {
+    /* |---|---|---|  |---|---|---|
+       | 0 | 1 | 2 |  | X | X | O |
+       |-----------|  |-----------|
+       | 3 | 4 | 5 |  | O | O | X |
+       |-----------|  |-----------|
+       | 6 | 7 | 8 |  | X | 7 |   |
+       |---|---|---|  |---|---|---|*/
+    gameBoard.updateBoard(Player.X, 0);
+    gameBoard.updateBoard(Player.O, 4);
+    gameBoard.updateBoard(Player.X, 1);
+    gameBoard.updateBoard(Player.O, 2);
+    gameBoard.updateBoard(Player.X, 6);
+    gameBoard.updateBoard(Player.O, 3);
+    gameBoard.updateBoard(Player.X, 5);
+    gameBoard.updateBoard(Player.O, 7);
+    gameBoard.updateBoard(Player.X, 8);
+
+    BoardUpdateStatus updateStatus = gameBoard.updateBoard(Player.O, 1);
+    assert !updateStatus.isSuccess();
+    assert updateStatus.getBoardStatus().equals(BoardStatus.DRAW);
+    assert updateStatus.getNextPlayer().equals(Player.NONE);
+    assert updateStatus.getWinner().equals(Player.NONE);
+    for (String x : updateStatus.getBoard()) {
+      assert x != null;
+    }
+
+  }
+
 }
