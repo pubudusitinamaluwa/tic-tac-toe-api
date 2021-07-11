@@ -14,8 +14,8 @@ import com.example.tictactoe.session.GameSession;
 
 @Service
 public class SessionManagerImpl implements SessionManager {
-  private int maxSessions;
-  private int timeoutSeconds;
+  private final int maxSessions;
+  private final int timeoutSeconds;
   private final Map<String, GameSession> sessionMap = new HashMap<>();
 
   public SessionManagerImpl(@Value("${game.sessions.max}") int maxSessions,

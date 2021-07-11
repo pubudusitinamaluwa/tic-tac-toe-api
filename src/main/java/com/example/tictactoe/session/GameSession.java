@@ -12,7 +12,7 @@ import lombok.Getter;
 public class GameSession {
   private final String sessionId;
   private long lastActiveTs;
-  private GameBoard gameBoard;
+  private final GameBoard gameBoard;
 
   public boolean isValid(long timeoutMillis) {
     return timeoutMillis > (System.currentTimeMillis() - lastActiveTs);

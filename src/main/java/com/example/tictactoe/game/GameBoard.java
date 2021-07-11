@@ -20,7 +20,7 @@ import static com.example.tictactoe.game.Player.X;
 @Getter
 public class GameBoard {
   private final String sessionId;
-  private String[] board = new String[9];
+  private final String[] board = new String[9];
   private GameStatus gameStatus = ACTIVE;
   private Player allowedStriker = X;
   private Player winner = NONE;

@@ -1,6 +1,5 @@
 package com.example.tictactoe.services;
 
-import com.example.tictactoe.game.BoardState;
 import com.example.tictactoe.session.GameSession;
 
 public interface SessionManager {
