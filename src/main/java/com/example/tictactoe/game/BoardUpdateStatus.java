@@ -10,4 +10,5 @@ public class BoardUpdateStatus {
   private final BoardStatus boardStatus;
   private final Player nextPlayer;
   private final String[] board;
+  private final Player winner;
 }

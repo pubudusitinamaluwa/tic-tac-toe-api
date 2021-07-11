@@ -1,6 +1,7 @@
 package com.example.tictactoe.game;
 
 import static com.example.tictactoe.game.BoardStatus.ACTIVE;
+import static com.example.tictactoe.game.Player.NONE;
 import static com.example.tictactoe.game.Player.O;
 import static com.example.tictactoe.game.Player.X;
 
@@ -30,9 +31,9 @@ public class GameBoard {
     if (isValidTurn(player)) {
       board[index] = player.name();
       updateTurn();
-      return new BoardUpdateStatus(true, boardStatus, currentPlayer, board);
+      return new BoardUpdateStatus(true, boardStatus, currentPlayer, board, NONE);
     } else {
-      return new BoardUpdateStatus(false, boardStatus, currentPlayer, board);
+      return new BoardUpdateStatus(false, boardStatus, currentPlayer, board, NONE);
     }
   }
 
@@ -52,7 +53,7 @@ public class GameBoard {
   private void updateTurn() {
     if (currentPlayer.equals(X)) {
       this.currentPlayer = O;
-    } else {
+    } else if(currentPlayer.equals(O)) {
       this.currentPlayer = X;
     }
   }
