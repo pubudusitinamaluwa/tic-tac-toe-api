@@ -37,7 +37,7 @@ public class GameBoard {
    * @return Board state
    */
   public BoardState updateBoard(Player player, int index) {
-    if (isValidStriker(player) && gameStatus.equals(ACTIVE)) {
+    if (isValidStriker(player) && gameStatus.equals(ACTIVE) && board[index] == null) {
       board[index] = player.name();
       evaluateBoard(player);
       updateStriker();
@@ -80,7 +80,6 @@ public class GameBoard {
     List<String> lines = getLines();
     boolean isDraw = true;
     for (String line : lines) {
-      System.out.println(line);
       if (line.matches(striker.name() + "{3}")) {
         gameStatus = WIN;
         winner = striker;

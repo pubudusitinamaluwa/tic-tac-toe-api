@@ -30,6 +30,6 @@ public class GameManagerImpl implements GameManager {
       }
       return updatedBoardState;
     }
-    throw new IllegalStateException("Session does not exists. id: " + sessionId + ".");
+    throw new IllegalStateException("Session does not exists. id: " + sessionId);
   }
 }
