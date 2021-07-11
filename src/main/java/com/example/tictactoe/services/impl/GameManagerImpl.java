@@ -23,7 +23,12 @@ public class GameManagerImpl implements GameManager {
     if (sessionManager.isActiveSession(sessionId)) {
       GameSession session = sessionManager.getSession(sessionId);
       GameBoard gameBoard = session.getGameBoard();
-      return gameBoard.updateBoard(striker, index);
+      BoardState updatedBoardState = gameBoard.updateBoard(striker, index);
+      // Update session last active ts if update was a success
+      if (updatedBoardState.isSuccess()) {
+        session.updateLastActive();
+      }
+      return updatedBoardState;
     }
     throw new IllegalStateException("Session does not exists. id: " + sessionId + ".");
   }

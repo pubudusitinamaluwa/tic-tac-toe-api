@@ -57,7 +57,7 @@ class SessionManagerTest {
   void too_many_new_sessions_throws_exception() {
     assertThrows(IllegalStateException.class, () -> {
       int i = 0;
-      while (i <= maxSessions + 1) {
+      while (i <= maxSessions) {
         sessionManager.createSession();
         i++;
       }

@@ -42,7 +42,7 @@ public class SessionManagerImpl implements SessionManager {
   @Override
   public GameSession createSession() throws IllegalStateException {
     int activeSessionCount = sessionMap.size();
-    if (activeSessionCount <= maxSessions) {
+    if (activeSessionCount < maxSessions) {
       String sessionId = UUID.randomUUID().toString();
       GameBoard gameBoard = new GameBoard(sessionId);
       GameSession gameSession = new GameSession(sessionId, System.currentTimeMillis(), gameBoard);
