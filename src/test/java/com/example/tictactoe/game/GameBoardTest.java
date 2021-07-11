@@ -34,7 +34,7 @@ class GameBoardTest {
   }
 
   @Test
-  void board_evaluates_win_X() {
+  void board_evaluates_win() {
     /* |---|---|---|  |---|---|---|
        | 0 | 1 | 2 |  | X |   | O |
        |-----------|  |-----------|

@@ -1,6 +1,11 @@
 package com.example.tictactoe.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.example.tictactoe.game.BoardStatus.ACTIVE;
+import static com.example.tictactoe.game.BoardStatus.DRAW;
+import static com.example.tictactoe.game.BoardStatus.WIN;
 import static com.example.tictactoe.game.Player.NONE;
 import static com.example.tictactoe.game.Player.O;
 import static com.example.tictactoe.game.Player.X;
@@ -14,7 +19,8 @@ public class GameBoard {
   private final String sessionId;
   private String[] board = new String[9];
   private BoardStatus boardStatus = ACTIVE;
-  private Player currentPlayer = X;
+  private Player allowedStriker = X;
+  private Player winner = NONE;
 
   public GameBoard(String sessionId) {
     this.sessionId = sessionId;
@@ -23,38 +29,90 @@ public class GameBoard {
   /**
    * Update and get board status
    *
-   * @param player Player turn
+   * @param player Player taking the turn to strike
    * @param index  Index to insert
    * @return Board status
    */
   public BoardUpdateStatus updateBoard(Player player, int index) {
-    if (isValidTurn(player)) {
+    if (isValidStriker(player) && boardStatus.equals(ACTIVE)) {
       board[index] = player.name();
-      updateTurn();
-      return new BoardUpdateStatus(true, boardStatus, currentPlayer, board, NONE);
+      evaluateBoard(player);
+      updateStriker();
+      return new BoardUpdateStatus(true, boardStatus, allowedStriker, board, winner);
     } else {
-      return new BoardUpdateStatus(false, boardStatus, currentPlayer, board, NONE);
+      return new BoardUpdateStatus(false, boardStatus, allowedStriker, board, winner);
     }
   }
 
   /**
-   * Validate current turn
+   * Validate current striker
    *
    * @param player Player taking the turn
-   * @return Returns true if player taking the turn is equal to expected current turn, else false
+   * @return Returns true if player taking the turn is equal to allowed striker, else false
    */
-  private boolean isValidTurn(Player player) {
-    return this.currentPlayer.equals(player);
+  private boolean isValidStriker(Player player) {
+    return this.allowedStriker.equals(player);
   }
 
   /**
    * Updates/Switches turn. X->O or O->X depending on the current turn value
    */
-  private void updateTurn() {
-    if (currentPlayer.equals(X)) {
-      this.currentPlayer = O;
-    } else if(currentPlayer.equals(O)) {
-      this.currentPlayer = X;
+  private void updateStriker() {
+    if (allowedStriker.equals(X)) {
+      this.allowedStriker = O;
+    } else if (allowedStriker.equals(O)) {
+      this.allowedStriker = X;
     }
+  }
+
+  /**
+   * Evaluate the board and determine the status of the game.
+   * If the striker has completed a line, game ends with striker as the winner.
+   * If the board is full without any complete line, game end with draw status.
+   *
+   * @param striker Player taking the turn to strike
+   */
+  private void evaluateBoard(Player striker) {
+    // TODO: Improvement - Evaluate if game ends with a draw before all values are filled
+    List<String> lines = getLines();
+    boolean isDraw = true;
+    for (String line : lines) {
+      System.out.println(line);
+      if (line.matches(striker.name() + "{3}")) {
+        boardStatus = WIN;
+        winner = striker;
+        allowedStriker = NONE;
+        return;
+      } else if (line.contains("null")) {
+        isDraw = false;
+      }
+    }
+    if (isDraw) {
+      boardStatus = DRAW;
+      allowedStriker = NONE;
+    }
+  }
+
+  /**
+   * Get all possible completion lines in the game board
+   *
+   * @return List of lines extracted from current game board
+   */
+  private List<String> getLines() {
+    List<String> lines = new ArrayList<>();
+    for (int i = 0; i < board.length; i += 3) {
+      // Horizontal lines
+      String horizontalLine = board[i] + board[i + 1] + board[i + 2];
+      lines.add(horizontalLine);
+      // Vertical Lines
+      int k = i / 3;
+      String verticalLine = board[k] + board[k + 3] + board[k + 6];
+      lines.add(verticalLine);
+    }
+    // Diagonal Lines
+    lines.add(board[0] + board[4] + board[8]);
+    lines.add(board[2] + board[4] + board[6]);
+
+    return lines;
   }
 }
