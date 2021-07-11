@@ -16,7 +16,7 @@ class SessionManagerTest {
   @Value("${game.sessions.max}")
   private int maxSessions;
 
-  SessionManager sessionManager;
+  private SessionManager sessionManager;
 
   @BeforeEach
   void init() {
