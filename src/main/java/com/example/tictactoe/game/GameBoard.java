@@ -27,7 +27,13 @@ public class GameBoard {
    * @return Board status
    */
   public BoardUpdateStatus updateBoard(Turn turn, int index) {
-    return new BoardUpdateStatus(true, this.boardStatus, this.turn, this.board);
+    if (isValidTurn(turn)) {
+      board[index] = turn.name();
+      updateTurn();
+      return new BoardUpdateStatus(true, this.boardStatus, this.turn, this.board);
+    } else {
+      return new BoardUpdateStatus(false, this.boardStatus, this.turn, this.board);
+    }
   }
 
   /**
@@ -45,9 +51,9 @@ public class GameBoard {
    */
   private void updateTurn() {
     if (turn.equals(X)) {
-      turn = O;
+      this.turn = O;
     } else {
-      turn = X;
+      this.turn = X;
     }
   }
 }
