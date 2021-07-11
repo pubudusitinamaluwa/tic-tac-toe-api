@@ -10,15 +10,15 @@ public interface SessionManager {
    * @param sessionId Session id
    * @return Returns true if the session is valid and active, else returns false
    */
-  boolean isValidSession(String sessionId);
+  boolean isActiveSession(String sessionId);
 
   /**
    * Create a new game session
    *
-   * @return A new board state is returned
+   * @return A new game session is returned
    * @throws IllegalStateException Thrown if max active sessions (defaults to game.session.max) has reached.
    */
-  BoardState createSession() throws IllegalStateException;
+  GameSession createSession() throws IllegalStateException;
 
   /**
    * Get a game session by id

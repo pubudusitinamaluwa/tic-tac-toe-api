@@ -3,6 +3,8 @@ package com.example.tictactoe.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+
 import static com.example.tictactoe.game.GameStatus.ACTIVE;
 import static com.example.tictactoe.game.GameStatus.DRAW;
 import static com.example.tictactoe.game.GameStatus.WIN;
@@ -15,6 +17,7 @@ import static com.example.tictactoe.game.Player.X;
  * <p>
  * GameBoar manages the state of the game for a single session.
  */
+@Getter
 public class GameBoard {
   private final String sessionId;
   private String[] board = new String[9];

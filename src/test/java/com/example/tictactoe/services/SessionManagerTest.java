@@ -5,9 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.tictactoe.game.BoardState;
+import com.example.tictactoe.game.GameBoard;
 import com.example.tictactoe.game.Player;
 import com.example.tictactoe.services.impl.SessionManagerImpl;
+import com.example.tictactoe.session.GameSession;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -15,22 +16,27 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class SessionManagerTest {
   @Value("${game.sessions.max}")
   private int maxSessions;
+  @Value("${game.sessions.timeoutSeconds}")
+  private int timeoutSeconds;
 
   private SessionManager sessionManager;
 
   @BeforeEach
   void init() {
-    sessionManager = new SessionManagerImpl();
+    sessionManager = new SessionManagerImpl(maxSessions, timeoutSeconds);
   }
 
   @Test
-  void create_session_returns_new_board() {
-    BoardState boardState = sessionManager.createSession();
-    assert boardState != null;
-    assert boardState.getSessionId() != null;
-    assert boardState.getNextPlayer().equals(Player.X);
-    assert boardState.getWinner().equals(Player.NONE);
-    String[] board = boardState.getBoard();
+  void create_session_returns_new_game_session() {
+    GameSession gameSession = sessionManager.createSession();
+    assert gameSession.getSessionId() != null;
+    assert gameSession.getLastActiveTs() <= System.currentTimeMillis();
+    GameBoard gameBoard = gameSession.getGameBoard();
+    assert gameBoard != null;
+    assert gameBoard.getSessionId() != null;
+    assert gameBoard.getAllowedStriker().equals(Player.X);
+    assert gameBoard.getWinner().equals(Player.NONE);
+    String[] board = gameBoard.getBoard();
     for (String x : board) {
       assert x == null;
     }
@@ -38,20 +44,20 @@ class SessionManagerTest {
 
   @Test
   void invalid_session_id_returns_false() {
-    assert !sessionManager.isValidSession("non_existing_id");
+    assert !sessionManager.isActiveSession("non_existing_id");
   }
 
   @Test
   void valid_session_id_returns_true() {
-    BoardState boardState = sessionManager.createSession();
-    assert sessionManager.isValidSession(boardState.getSessionId());
+    GameSession gameSession = sessionManager.createSession();
+    assert sessionManager.isActiveSession(gameSession.getSessionId());
   }
 
   @Test
   void too_many_new_sessions_throws_exception() {
     assertThrows(IllegalStateException.class, () -> {
       int i = 0;
-      while (i < maxSessions + 1) {
+      while (i <= maxSessions + 1) {
         sessionManager.createSession();
         i++;
       }
