@@ -1,12 +1,13 @@
 package com.example.tictactoe.services;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.tictactoe.game.BoardState;
 import com.example.tictactoe.game.Player;
+import com.example.tictactoe.services.impl.SessionManagerImpl;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -15,8 +16,12 @@ class SessionManagerTest {
   @Value("${game.sessions.max}")
   private int maxSessions;
 
-  @Autowired
   SessionManager sessionManager;
+
+  @BeforeEach
+  void init() {
+    sessionManager = new SessionManagerImpl();
+  }
 
   @Test
   void create_session_returns_new_board() {
