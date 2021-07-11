@@ -38,9 +38,9 @@ public class GameBoard {
       board[index] = player.name();
       evaluateBoard(player);
       updateStriker();
-      return new BoardState(true, gameStatus, allowedStriker, board, winner);
+      return new BoardState(sessionId, true, gameStatus, allowedStriker, board, winner);
     } else {
-      return new BoardState(false, gameStatus, allowedStriker, board, winner);
+      return new BoardState(sessionId, false, gameStatus, allowedStriker, board, winner);
     }
   }
 
