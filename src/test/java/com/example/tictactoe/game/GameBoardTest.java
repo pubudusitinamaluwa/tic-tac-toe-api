@@ -24,6 +24,17 @@ class GameBoardTest {
   }
 
   @Test
+  void board_update_fails_on_updating_pre_written_index() {
+    gameBoard.updateBoard(Player.X, 1);
+    BoardState updateStatus = gameBoard.updateBoard(Player.O, 1);
+    assert !updateStatus.isSuccess();
+    assert updateStatus.getNextPlayer().equals(Player.O);
+    assert updateStatus.getGameStatus() == GameStatus.ACTIVE;
+    assert "X".equals(updateStatus.getBoard()[1]);
+    assert updateStatus.getWinner().equals(Player.NONE);
+  }
+
+  @Test
   void valid_turn_updates_board() {
     BoardState updateStatus = gameBoard.updateBoard(Player.X, 1);
     assert updateStatus.isSuccess();
