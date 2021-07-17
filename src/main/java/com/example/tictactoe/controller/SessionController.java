@@ -13,7 +13,7 @@ import com.example.tictactoe.services.SessionManager;
 import com.example.tictactoe.session.GameSession;
 
 @Controller
-@RequestMapping(value = "/session")
+@RequestMapping(value = "/tictactoe/session")
 public class SessionController {
   @Autowired
   SessionManager sessionManager;
