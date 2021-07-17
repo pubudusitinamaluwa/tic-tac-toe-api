@@ -21,7 +21,7 @@ import static com.example.tictactoe.game.Player.X;
 public class GameBoard {
   private final String[] board = new String[9];
   private GameStatus gameStatus = ACTIVE;
-  private Player allowedStriker = X;
+  private Player nextStriker = X;
   private Player winner = NONE;
 
   /**
@@ -36,9 +36,9 @@ public class GameBoard {
       board[index] = player.name();
       evaluateBoard(player);
       updateStriker();
-      return new BoardState(true, gameStatus, allowedStriker, board, winner);
+      return new BoardState(true, gameStatus, nextStriker, board, winner);
     } else {
-      return new BoardState(false, gameStatus, allowedStriker, board, winner);
+      return new BoardState(false, gameStatus, nextStriker, board, winner);
     }
   }
 
@@ -49,17 +49,17 @@ public class GameBoard {
    * @return Returns true if player taking the turn is equal to allowed striker, else false
    */
   private boolean isValidStriker(Player player) {
-    return this.allowedStriker.equals(player);
+    return this.nextStriker.equals(player);
   }
 
   /**
    * Updates/Switches turn. X->O or O->X depending on the current turn value
    */
   private void updateStriker() {
-    if (allowedStriker.equals(X)) {
-      this.allowedStriker = O;
-    } else if (allowedStriker.equals(O)) {
-      this.allowedStriker = X;
+    if (nextStriker.equals(X)) {
+      this.nextStriker = O;
+    } else if (nextStriker.equals(O)) {
+      this.nextStriker = X;
     }
   }
 
@@ -78,7 +78,7 @@ public class GameBoard {
       if (line.matches(striker.name() + "{3}")) {
         gameStatus = WIN;
         winner = striker;
-        allowedStriker = NONE;
+        nextStriker = NONE;
         return;
       } else if (line.contains("null")) {
         isDraw = false;
@@ -86,7 +86,7 @@ public class GameBoard {
     }
     if (isDraw) {
       gameStatus = DRAW;
-      allowedStriker = NONE;
+      nextStriker = NONE;
     }
   }
 

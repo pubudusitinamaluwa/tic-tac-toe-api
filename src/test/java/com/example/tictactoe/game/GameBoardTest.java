@@ -17,7 +17,7 @@ class GameBoardTest {
   void invalid_turn_skips_updating_board() {
     BoardState updateStatus = gameBoard.updateBoard(Player.O, 1);
     assert !updateStatus.isSuccess();
-    assert updateStatus.getNextPlayer().equals(Player.X);
+    assert updateStatus.getNextStriker().equals(Player.X);
     assert updateStatus.getGameStatus() == GameStatus.ACTIVE;
     assert updateStatus.getBoard()[1] == null;
     assert updateStatus.getWinner().equals(Player.NONE);
@@ -28,7 +28,7 @@ class GameBoardTest {
     gameBoard.updateBoard(Player.X, 1);
     BoardState updateStatus = gameBoard.updateBoard(Player.O, 1);
     assert !updateStatus.isSuccess();
-    assert updateStatus.getNextPlayer().equals(Player.O);
+    assert updateStatus.getNextStriker().equals(Player.O);
     assert updateStatus.getGameStatus() == GameStatus.ACTIVE;
     assert "X".equals(updateStatus.getBoard()[1]);
     assert updateStatus.getWinner().equals(Player.NONE);
@@ -38,7 +38,7 @@ class GameBoardTest {
   void valid_turn_updates_board() {
     BoardState updateStatus = gameBoard.updateBoard(Player.X, 1);
     assert updateStatus.isSuccess();
-    assert updateStatus.getNextPlayer().equals(Player.O);
+    assert updateStatus.getNextStriker().equals(Player.O);
     assert updateStatus.getGameStatus() == GameStatus.ACTIVE;
     assert updateStatus.getBoard()[1].equals("X");
     assert updateStatus.getWinner().equals(Player.NONE);
@@ -62,7 +62,7 @@ class GameBoardTest {
     BoardState updateStatus = gameBoard.updateBoard(Player.X, 3);
 
     assert updateStatus.isSuccess();
-    assert updateStatus.getNextPlayer().equals(Player.NONE);
+    assert updateStatus.getNextStriker().equals(Player.NONE);
     assert updateStatus.getGameStatus().equals(GameStatus.WIN);
     assert updateStatus.getWinner().equals(Player.X);
   }
@@ -86,7 +86,7 @@ class GameBoardTest {
 
     BoardState updateStatus = gameBoard.updateBoard(Player.O, 1);
     assert !updateStatus.isSuccess();
-    assert updateStatus.getNextPlayer().equals(Player.NONE);
+    assert updateStatus.getNextStriker().equals(Player.NONE);
     assert updateStatus.getGameStatus().equals(GameStatus.WIN);
     assert updateStatus.getWinner().equals(Player.X);
     String[] board = updateStatus.getBoard();
@@ -114,7 +114,7 @@ class GameBoardTest {
     BoardState updateStatus = gameBoard.updateBoard(Player.X, 8);
 
     assert updateStatus.isSuccess();
-    assert updateStatus.getNextPlayer().equals(Player.NONE);
+    assert updateStatus.getNextStriker().equals(Player.NONE);
     assert updateStatus.getGameStatus().equals(GameStatus.DRAW);
     assert updateStatus.getWinner().equals(Player.NONE);
     for (String x : updateStatus.getBoard()) {
@@ -144,7 +144,7 @@ class GameBoardTest {
     BoardState updateStatus = gameBoard.updateBoard(Player.O, 1);
     assert !updateStatus.isSuccess();
     assert updateStatus.getGameStatus().equals(GameStatus.DRAW);
-    assert updateStatus.getNextPlayer().equals(Player.NONE);
+    assert updateStatus.getNextStriker().equals(Player.NONE);
     assert updateStatus.getWinner().equals(Player.NONE);
     for (String x : updateStatus.getBoard()) {
       assert x != null;

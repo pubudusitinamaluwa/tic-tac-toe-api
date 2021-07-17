@@ -8,7 +8,7 @@ import lombok.Getter;
 public class BoardState {
   private final boolean success;
   private final GameStatus gameStatus;
-  private final Player nextPlayer;
+  private final Player nextStriker;
   private final String[] board;
   private final Player winner;
 }

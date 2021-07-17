@@ -33,7 +33,7 @@ class SessionManagerTest {
     assert gameSession.getLastActiveTs() <= System.currentTimeMillis();
     GameBoard gameBoard = gameSession.getGameBoard();
     assert gameBoard != null;
-    assert gameBoard.getAllowedStriker().equals(Player.X);
+    assert gameBoard.getNextStriker().equals(Player.X);
     assert gameBoard.getWinner().equals(Player.NONE);
     String[] board = gameBoard.getBoard();
     for (String x : board) {
@@ -79,7 +79,7 @@ class SessionManagerTest {
       assert gameSession.getLastActiveTs() <= System.currentTimeMillis();
       GameBoard gameBoard = gameSession.getGameBoard();
       assert gameBoard != null;
-      assert gameBoard.getAllowedStriker().equals(Player.X);
+      assert gameBoard.getNextStriker().equals(Player.X);
       assert gameBoard.getWinner().equals(Player.NONE);
       String[] board = gameBoard.getBoard();
       for (String x : board) {
