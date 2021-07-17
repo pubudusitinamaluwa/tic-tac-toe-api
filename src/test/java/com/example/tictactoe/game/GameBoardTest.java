@@ -10,7 +10,7 @@ class GameBoardTest {
 
   @BeforeEach
   void init() {
-    gameBoard = new GameBoard("1");
+    gameBoard = new GameBoard();
   }
 
   @Test

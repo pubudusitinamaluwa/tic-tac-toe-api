@@ -33,7 +33,6 @@ class SessionManagerTest {
     assert gameSession.getLastActiveTs() <= System.currentTimeMillis();
     GameBoard gameBoard = gameSession.getGameBoard();
     assert gameBoard != null;
-    assert gameBoard.getSessionId() != null;
     assert gameBoard.getAllowedStriker().equals(Player.X);
     assert gameBoard.getWinner().equals(Player.NONE);
     String[] board = gameBoard.getBoard();
@@ -80,7 +79,6 @@ class SessionManagerTest {
       assert gameSession.getLastActiveTs() <= System.currentTimeMillis();
       GameBoard gameBoard = gameSession.getGameBoard();
       assert gameBoard != null;
-      assert gameBoard.getSessionId() != null;
       assert gameBoard.getAllowedStriker().equals(Player.X);
       assert gameBoard.getWinner().equals(Player.NONE);
       String[] board = gameBoard.getBoard();

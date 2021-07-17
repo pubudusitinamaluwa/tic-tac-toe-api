@@ -42,7 +42,6 @@ class GameManagerTest {
   void strike_on_valid_session_returns_updated_board_state() {
     BoardState boardState = gameManager.strike(initSessionId, Player.X, 0);
     assert boardState.isSuccess();
-    assert initSessionId.equals(boardState.getSessionId());
     assert boardState.getNextPlayer().equals(Player.O);
     assert boardState.getWinner().equals(Player.NONE);
     assert boardState.getGameStatus().equals(GameStatus.ACTIVE);

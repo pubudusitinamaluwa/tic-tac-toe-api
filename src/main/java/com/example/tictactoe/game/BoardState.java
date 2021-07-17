@@ -6,7 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class BoardState {
-  private final String sessionId;
   private final boolean success;
   private final GameStatus gameStatus;
   private final Player nextPlayer;

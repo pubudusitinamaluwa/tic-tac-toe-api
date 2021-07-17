@@ -30,10 +30,10 @@ class SessionControllerIntegrationTest {
 
   @Test
   void create_session_return_session() throws Exception {
-    GameSession gameSession = new GameSession("1", System.currentTimeMillis(), new GameBoard("1"));
+    GameSession gameSession = new GameSession("1", System.currentTimeMillis(), new GameBoard());
     given(sessionManager.createSession()).willReturn(gameSession);
 
-    mvc.perform(get("/session/create")
+    mvc.perform(get("/tictactoe/session/create")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
@@ -43,7 +43,7 @@ class SessionControllerIntegrationTest {
   void create_session_over_max_limit_throws_error() throws Exception {
     given(sessionManager.createSession()).willThrow(IllegalStateException.class);
 
-    mvc.perform(get("/session/create")
+    mvc.perform(get("/tictactoe/session/create")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isConflict())
         .andReturn();
@@ -51,10 +51,10 @@ class SessionControllerIntegrationTest {
 
   @Test
   void get_session_return_active_session() throws Exception {
-    GameSession gameSession = new GameSession("1", System.currentTimeMillis(), new GameBoard("1"));
+    GameSession gameSession = new GameSession("1", System.currentTimeMillis(), new GameBoard());
     given(sessionManager.getSession("1")).willReturn(gameSession);
 
-    mvc.perform(get("/session/get/1")
+    mvc.perform(get("/tictactoe/session/get/1")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
@@ -62,7 +62,7 @@ class SessionControllerIntegrationTest {
 
   @Test
   void get_invalid_session_returns_not_found() throws Exception {
-    GameSession gameSession = new GameSession("1", System.currentTimeMillis(), new GameBoard("1"));
+    GameSession gameSession = new GameSession("1", System.currentTimeMillis(), new GameBoard());
     given(sessionManager.getSession("1")).willReturn(gameSession);
 
     mvc.perform(get("/session/get/2")

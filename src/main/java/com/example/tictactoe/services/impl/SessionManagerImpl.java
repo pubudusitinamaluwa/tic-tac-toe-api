@@ -44,7 +44,7 @@ public class SessionManagerImpl implements SessionManager {
     int activeSessionCount = sessionMap.size();
     if (activeSessionCount < maxSessions) {
       String sessionId = UUID.randomUUID().toString();
-      GameBoard gameBoard = new GameBoard(sessionId);
+      GameBoard gameBoard = new GameBoard();
       GameSession gameSession = new GameSession(sessionId, System.currentTimeMillis(), gameBoard);
       sessionMap.put(sessionId, gameSession);
       return gameSession;

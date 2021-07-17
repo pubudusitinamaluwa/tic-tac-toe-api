@@ -33,7 +33,7 @@ class GameControllerIntegrationTest {
   void valid_strike_returns_updated_board_state() throws Exception {
     String[] board = new String[9];
     board[0] = Player.X.name();
-    BoardState boardState = new BoardState("1", true, GameStatus.ACTIVE, Player.O, board,
+    BoardState boardState = new BoardState(true, GameStatus.ACTIVE, Player.O, board,
         Player.NONE);
     given(gameManager.strike("1", Player.X, 0)).willReturn(boardState);
 

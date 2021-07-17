@@ -19,15 +19,10 @@ import static com.example.tictactoe.game.Player.X;
  */
 @Getter
 public class GameBoard {
-  private final String sessionId;
   private final String[] board = new String[9];
   private GameStatus gameStatus = ACTIVE;
   private Player allowedStriker = X;
   private Player winner = NONE;
-
-  public GameBoard(String sessionId) {
-    this.sessionId = sessionId;
-  }
 
   /**
    * Update and get board status
@@ -41,9 +36,9 @@ public class GameBoard {
       board[index] = player.name();
       evaluateBoard(player);
       updateStriker();
-      return new BoardState(sessionId, true, gameStatus, allowedStriker, board, winner);
+      return new BoardState(true, gameStatus, allowedStriker, board, winner);
     } else {
-      return new BoardState(sessionId, false, gameStatus, allowedStriker, board, winner);
+      return new BoardState(false, gameStatus, allowedStriker, board, winner);
     }
   }
 
