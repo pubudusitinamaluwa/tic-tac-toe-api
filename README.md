@@ -21,16 +21,16 @@ The API serves endoints for,
 ## Build  & Run
 ### Backend
 Clone the repository
-```aidl
+```
 git clone https://github.com/pubudusitinamaluwa/tic-tac-toe-api
 ```
 Assemble the jar
-```aidl
+```
 cd tic-tac-toe-api
 ./gradlew clean assemble
 ```
 A jar file will be created in `./build/lib`. Execute the jar file
-```aidl
+```
 java -jar build/libs/tic-tac-toe-api-1.0.jar
 ```
 ### Frontend
