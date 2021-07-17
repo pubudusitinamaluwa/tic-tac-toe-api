@@ -40,7 +40,7 @@ public class GameBoard {
       msg = "Next striker: " + nextStriker.name();
       return new BoardState(true, gameStatus, nextStriker, board, winner, msg);
     } else {
-      msg = "Invalid strike! Next striker: " + nextStriker.name();
+      msg = "Invalid Strike! Next Striker: " + nextStriker.name();
       return new BoardState(false, gameStatus, nextStriker, board, winner, msg);
     }
   }
