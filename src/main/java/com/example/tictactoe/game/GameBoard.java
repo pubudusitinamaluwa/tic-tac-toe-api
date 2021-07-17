@@ -37,10 +37,10 @@ public class GameBoard {
       board[index] = player.name();
       evaluateBoard(player);
       updateStriker();
-      msg = "Next strike: " + nextStriker.name();
+      msg = "Next striker: " + nextStriker.name();
       return new BoardState(true, gameStatus, nextStriker, board, winner, msg);
     } else {
-      msg = "Invalid strike! Next strike: " + nextStriker.name();
+      msg = "Invalid strike! Next striker: " + nextStriker.name();
       return new BoardState(false, gameStatus, nextStriker, board, winner, msg);
     }
   }
