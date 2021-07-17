@@ -32,13 +32,16 @@ public class GameBoard {
    * @return Board state
    */
   public BoardState updateBoard(Player player, int index) {
+    String msg;
     if (isValidStriker(player) && gameStatus.equals(ACTIVE) && board[index] == null) {
       board[index] = player.name();
       evaluateBoard(player);
       updateStriker();
-      return new BoardState(true, gameStatus, nextStriker, board, winner);
+      msg = "Next strike: " + nextStriker.name();
+      return new BoardState(true, gameStatus, nextStriker, board, winner, msg);
     } else {
-      return new BoardState(false, gameStatus, nextStriker, board, winner);
+      msg = "Invalid strike! Next strike: " + nextStriker.name();
+      return new BoardState(false, gameStatus, nextStriker, board, winner, msg);
     }
   }
 

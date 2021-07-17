@@ -34,7 +34,7 @@ class GameControllerIntegrationTest {
     String[] board = new String[9];
     board[0] = Player.X.name();
     BoardState boardState = new BoardState(true, GameStatus.ACTIVE, Player.O, board,
-        Player.NONE);
+        Player.NONE, "Next striker: X");
     given(gameManager.strike("1", Player.X, 0)).willReturn(boardState);
 
     mvc.perform(get("/tictactoe/game/strike")

@@ -11,4 +11,5 @@ public class BoardState {
   private final Player nextStriker;
   private final String[] board;
   private final Player winner;
+  private final String message;
 }
