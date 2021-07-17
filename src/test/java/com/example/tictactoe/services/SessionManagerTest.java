@@ -63,4 +63,30 @@ class SessionManagerTest {
       }
     });
   }
+
+  @Test
+  void invalid_sessions_cleared_to_create_new_sessions() throws InterruptedException {
+    try {
+      int i = 0;
+      while (i <= maxSessions) {
+        sessionManager.createSession();
+        i++;
+      }
+      assert false;
+    } catch (IllegalStateException ex) {
+      Thread.sleep(2000);
+      GameSession gameSession = sessionManager.createSession();
+      assert gameSession.getSessionId() != null;
+      assert gameSession.getLastActiveTs() <= System.currentTimeMillis();
+      GameBoard gameBoard = gameSession.getGameBoard();
+      assert gameBoard != null;
+      assert gameBoard.getSessionId() != null;
+      assert gameBoard.getAllowedStriker().equals(Player.X);
+      assert gameBoard.getWinner().equals(Player.NONE);
+      String[] board = gameBoard.getBoard();
+      for (String x : board) {
+        assert x == null;
+      }
+    }
+  }
 }
