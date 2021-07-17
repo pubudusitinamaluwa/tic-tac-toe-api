@@ -15,7 +15,7 @@ import com.example.tictactoe.services.GameManager;
 
 @Controller
 @CrossOrigin
-@RequestMapping(value = "/tictoctoe/game")
+@RequestMapping(value = "/tictactoe/game")
 public class GameController {
   @Autowired
   GameManager gameManager;

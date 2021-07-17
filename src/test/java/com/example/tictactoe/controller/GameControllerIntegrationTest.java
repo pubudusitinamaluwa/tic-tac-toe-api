@@ -37,7 +37,7 @@ class GameControllerIntegrationTest {
         Player.NONE);
     given(gameManager.strike("1", Player.X, 0)).willReturn(boardState);
 
-    mvc.perform(get("/tictoctoe/game/strike")
+    mvc.perform(get("/tictactoe/game/strike")
         .queryParam("sessionId", "1")
         .queryParam("striker", Player.X.name())
         .queryParam("index", "0")
@@ -50,7 +50,7 @@ class GameControllerIntegrationTest {
   void invalid_strike_returns_conflict() throws Exception {
     given(gameManager.strike("1", Player.O, 0)).willThrow(IllegalStateException.class);
 
-    mvc.perform(get("/tictoctoe/game/strike")
+    mvc.perform(get("/tictactoe/game/strike")
         .queryParam("sessionId", "1")
         .queryParam("striker", Player.O.name())
         .queryParam("index", "0")
