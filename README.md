@@ -3,10 +3,11 @@
 ## Introduction
 
 This project includes a simple backend implementation for Tic-Tac-Toe done with Java and Springboot.
+The frontend implementation can be found here: [tic-tac-toe](https://github.com/pubudusitinamaluwa/tic-tac-toe)
 
 Read more about the game: https://en.wikipedia.org/wiki/Tic-tac-toe
 
-The API serves endoints for,
+The API serves endpoints for,
 * Session management
   * Create session (`/tictactoe/session/create`)
     > Creates a new session with a game board. Returns session with a sessionId, timestamp and game board.
@@ -128,8 +129,7 @@ The API serves endoints for,
 
 ## Build  & Run
 
-### Backend
-#### With Jar:
+### With Jar:
 Clone the repository
 ```shell
 git clone https://github.com/pubudusitinamaluwa/tic-tac-toe-api
@@ -143,7 +143,7 @@ A jar file will be created in `./build/libs`. Execute the jar file
 ```shell
 java -jar build/libs/tic-tac-toe-api-1.0.jar
 ```
-#### With Docker:
+### With Docker:
 Build the image
 ```shell
 docker build -t tic-tac-toe:latest .
@@ -152,5 +152,27 @@ Run container and bind to port 8080 on host
 ```shell
 docker container run -d --rm --name tic-tac-toe-api -p 8080:8080 tic-tac-toe-api:latest
 ```
-### Frontend
-Please follow the build & run steps in this repo [tic-tac-toe](https://github.com/pubudusitinamaluwa/tic-tac-toe)
+
+### Deploy With Docker Compose
+Clone both backend and front end repositories
+```shell
+git clone https://github.com/pubudusitinamaluwa/tic-tac-toe-api
+git clone https://github.com/pubudusitinamaluwa/tic-tac-toe
+```
+Switch to compose directory in either repository
+```shell
+cd tic-tac-toe-api/compose
+```
+OR
+```shell
+cd tic-tac-toe/compose
+```
+Run docker compose up
+```shell
+docker compose up -d
+```
+Remove all resources created
+```shell
+docker compose down
+```
+

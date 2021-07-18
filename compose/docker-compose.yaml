@@ -1,0 +1,27 @@
+version: "3"
+services:
+  tic-tac-toe-api:
+    container_name: tic-tac-toe-api
+    build:
+      context: ../tic-tac-toe-api
+    image: tic-tac-toe-api:latest
+    restart: unless-stopped
+    networks:
+      - tic-tac-toe-net
+    ports:
+      - "8080:8080"
+  tic-tac-toe:
+    container_name: tic-tac-toe
+    build:
+      context: ../tic-tac-toe
+    image: tic-tac-toe:latest
+    restart: unless-stopped
+    networks:
+      - tic-tac-toe-net
+    depends_on:
+      - tic-tac-toe-api
+    ports:
+      - "3000:3000"
+networks:
+  tic-tac-toe-net:
+    driver: bridge
