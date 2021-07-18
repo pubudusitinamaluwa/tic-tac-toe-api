@@ -1,6 +1,8 @@
 # RESTful API backend for Tic-Tac-Toe
 
 ##Introduction
+
+---
 This project includes a simple backend implementation for Tic-Tac-Toe done with Java and Springboot.
 
 Read more about the game: https://en.wikipedia.org/wiki/Tic-tac-toe
@@ -19,22 +21,36 @@ The API serves endoints for,
     updated status.
 
 ## Build  & Run
+
+---
 ### Backend
+#### With Jar
 Clone the repository
-```
+```shell
 git clone https://github.com/pubudusitinamaluwa/tic-tac-toe-api
 ```
 Assemble the jar
-```
+```shell
 cd tic-tac-toe-api
 ./gradlew clean assemble
 ```
-A jar file will be created in `./build/lib`. Execute the jar file
-```
+A jar file will be created in `./build/libs`. Execute the jar file
+```shell
 java -jar build/libs/tic-tac-toe-api-1.0.jar
+```
+#### With Docker
+Assemble the jar
+```shell
+cd tic-tac-toe-api
+./gradlew clean assemble
+```
+Build the image
+```shell
+docker build -t tic-tac-toe:latest .
+```
+Run container and bind to port 8080 on host
+```shell
+docker container run --rm --name tic-tac-toe-api -p 8080:8080 tic-tac-toe-api
 ```
 ### Frontend
 Please follow the build & run steps in this repo [tic-tac-toe](https://github.com/pubudusitinamaluwa/tic-tac-toe)
-
-### Docker Compose
-ToDo
