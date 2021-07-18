@@ -144,11 +144,6 @@ A jar file will be created in `./build/libs`. Execute the jar file
 java -jar build/libs/tic-tac-toe-api-1.0.jar
 ```
 #### With Docker:
-Assemble the jar
-```shell
-cd tic-tac-toe-api
-./gradlew clean assemble
-```
 Build the image
 ```shell
 docker build -t tic-tac-toe:latest .
